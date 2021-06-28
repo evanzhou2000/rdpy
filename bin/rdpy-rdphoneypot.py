@@ -94,6 +94,7 @@ class HoneyPotServer(rdp.RDPServerObserver):
             
         elif nextEvent.type.value == rss.EventType.SCREEN:
             self._controller.setColorDepth(nextEvent.event.colorDepth.value)
+            print "setColorDepth(" + str(nextEvent.event.colorDepth.value) + ")"
             #compute centering because we cannot resize client
             clientSize = nextEvent.event.width.value, nextEvent.event.height.value
             print "clientSize:(" + str(clientSize[0]) + ", "+ str(clientSize[1]) + ")"
