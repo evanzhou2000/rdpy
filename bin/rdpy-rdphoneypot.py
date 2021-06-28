@@ -82,6 +82,10 @@ class HoneyPotServer(rdp.RDPServerObserver):
         @summary: main loop event
         """
         if nextEvent.type.value == rss.EventType.UPDATE:
+            #print "sendUpdate:(" + str(nextEvent.event.destLeft.value + self._dx) + ", " + str(nextEvent.event.destTop.value + self._dy) + ", " + str(nextEvent.event.destRight.value + self._dx) + ", " + str(nextEvent.event.destBottom.value + self._dy) + ", " + str(nextEvent.event.width.value) + ", " + str(nextEvent.event.height.value) + ", " + str(nextEvent.event.bpp.value) + ", " + str(nextEvent.event.format.value == rss.UpdateFormat.BMP) + ", " + str(len(nextEvent.event.data.value)) +")"
+            #with open('packet', 'wb') as binary_file:
+            #    binary_file.write(nextEvent.event.data.value)
+            #return
             self._controller.sendUpdate(nextEvent.event.destLeft.value + self._dx, nextEvent.event.destTop.value + self._dy, nextEvent.event.destRight.value + self._dx, nextEvent.event.destBottom.value + self._dy, nextEvent.event.width.value, nextEvent.event.height.value, nextEvent.event.bpp.value, nextEvent.event.format.value == rss.UpdateFormat.BMP, nextEvent.event.data.value)
             
         elif nextEvent.type.value == rss.EventType.CLOSE:
@@ -92,6 +96,7 @@ class HoneyPotServer(rdp.RDPServerObserver):
             self._controller.setColorDepth(nextEvent.event.colorDepth.value)
             #compute centering because we cannot resize client
             clientSize = nextEvent.event.width.value, nextEvent.event.height.value
+            print "clientSize:(" + str(clientSize[0]) + ", "+ str(clientSize[1]) + ")"
             serverSize = self._controller.getScreen()
             
             self._dx, self._dy = (max(0, serverSize[0] - clientSize[0]) / 2), max(0, (serverSize[1] - clientSize[1]) / 2)
