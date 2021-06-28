@@ -194,7 +194,6 @@ class ProxyClient(rdp.RDPClientObserver):
         self._server._rss.screen(width, height, depth)
         # maybe color depth change
         self._server._controller.setColorDepth(depth)
-        
 
     def onSessionReady(self):
         """
