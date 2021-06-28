@@ -188,9 +188,13 @@ class ProxyClient(rdp.RDPClientObserver):
         @see: rdp.RDPClientObserver.onReady
         """
         self._server.setClient(self)
+        # Evan: this cause the "protocol error"error in honeypot
+        depth = self._controller.getColorDepth()
+        width, height = self._controller.getScreen()
+        self._server._rss.screen(width, height, depth)
         # maybe color depth change
-        self._server._controller.setColorDepth(
-            self._controller.getColorDepth())
+        self._server._controller.setColorDepth(depth)
+        
 
     def onSessionReady(self):
         """
